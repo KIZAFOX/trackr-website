@@ -6,58 +6,55 @@
 <title>Trackr — Overlay League of Legends</title>
 <meta name="description" content="Trackr affiche rang, maîtrise et winrate en champ select, puis ton bilan LP en fin de partie. Gratuit, pour Windows.">
 <link rel="icon" href="logo.png">
+<meta name="theme-color" content="#040a1c">
+<meta property="og:image" content="logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0a1428;
-  --surface:#0f1d36;
-  --surface-2:#142544;
-  --border:#1f3358;
-  --text:#e8ecf4;
-  --muted:#8a99b8;
-  --accent:#c8aa6e;
-  --accent-ink:#1a1405;
-  --win:#3ecf8e;
-  --loss:#ef5b6b;
-  --font-display:'Oxanium',system-ui,sans-serif;
+  --bg:#040a1c;          --surface:#08122d;     --surface-2:#0c1a40;   --border:#12275a;      --text:#eef3ff;        --muted:#8fa3cf;       --accent:#1a6dff;      --accent-ink:#ffffff;  --win:#3ecf8e;         --loss:#ef5b6b;        --font-display:'Oxanium',system-ui,sans-serif;
   --font-body:'IBM Plex Sans',system-ui,sans-serif;
 }
 *{box-sizing:border-box;margin:0}
 html{scroll-behavior:smooth}
-body{position:relative;background:var(--bg);color:var(--text);font:400 17px/1.6 var(--font-body);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{position:relative;overflow-x:hidden;background:var(--bg);color:var(--text);font:400 17px/1.6 var(--font-body);-webkit-font-smoothing:antialiased}
 a{color:inherit}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
-.wrap, section, footer{position:relative;z-index:1}
+.wrap,section,footer{position:relative;z-index:1}
+#cursor-network{position:fixed;inset:0;pointer-events:none;z-index:0}
 .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
-#cursor-network{position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.9}
+
 nav{display:flex;align-items:center;justify-content:space-between;padding:20px 0}
 .brand{display:flex;align-items:center;gap:12px;text-decoration:none;font:800 24px var(--font-display);letter-spacing:.5px}
 .brand img,.brand svg{width:36px;height:36px;border-radius:8px}
 nav ul{display:flex;gap:28px;list-style:none;padding:0}
 nav ul a{text-decoration:none;color:var(--muted);font-weight:500}
 nav ul a:hover{color:var(--text)}
-.btn{display:inline-block;padding:14px 26px;border-radius:8px;font:700 17px var(--font-display);text-decoration:none;background:var(--accent);color:var(--accent-ink);border:2px solid var(--accent);transition:transform .15s, box-shadow .15s}
-.btn:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(200,170,110,.18)}
-.btn.ghost{background:transparent;color:var(--text);border-color:var(--border)}
+
+.btn{display:inline-block;padding:14px 26px;border-radius:8px;font:700 17px var(--font-display);text-decoration:none;background:var(--accent);color:var(--accent-ink);border:2px solid var(--accent);transition:transform .15s,box-shadow .15s;box-shadow:0 0 24px rgba(26,109,255,.35)}
+.btn:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(26,109,255,.5)}
+.btn.ghost{box-shadow:none;background:transparent;color:var(--text);border-color:var(--border)}
 .btn.ghost:hover{border-color:var(--accent)}
+
 .hero{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center;padding:72px 0 96px}
 h1{font:800 clamp(40px,6vw,68px)/1.02 var(--font-display);letter-spacing:-.5px}
 .hero p{color:var(--muted);margin:22px 0 32px;max-width:46ch;font-size:19px}
 .cta{display:flex;gap:14px;flex-wrap:wrap}
 .hero small{display:block;margin-top:16px;color:var(--muted);font-size:14px}
-.overlay{background:rgba(15,29,54,.78);border:1px solid var(--border);border-radius:14px;padding:18px;box-shadow:0 30px 80px rgba(0,0,0,.45);backdrop-filter:blur(10px);animation:rise .8s ease-out both}
+
+.overlay{background:rgba(8,18,45,.78);backdrop-filter:blur(10px);border:1px solid var(--border);border-radius:14px;padding:18px;box-shadow:0 0 60px rgba(26,109,255,.25),0 30px 80px rgba(0,0,0,.5);animation:rise .8s ease-out both}
 @keyframes rise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
 .ov-head{display:flex;justify-content:space-between;font:600 13px var(--font-display);color:var(--muted);padding-bottom:12px;border-bottom:1px solid var(--border)}
 .player{display:grid;grid-template-columns:40px 1fr auto;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--border)}
 .player:last-child{border-bottom:0}
-.av{width:40px;height:40px;border-radius:50%;background:var(--surface-2);border:2px solid var(--accent);display:grid;place-items:center;font:700 14px var(--font-display);color:var(--accent)}
+.av{width:40px;height:40px;border-radius:50%;background:var(--surface-2);border:2px solid var(--accent);display:grid;place-items:center;font:700 14px var(--font-display);color:#6fa8ff}
 .pname{font-weight:600;line-height:1.2}
 .prank{font-size:13px;color:var(--muted)}
 .wr{text-align:right;font:700 18px var(--font-display)}
 .wr.good{color:var(--win)}.wr.bad{color:var(--loss)}
 .wr span{display:block;font:400 12px var(--font-body);color:var(--muted)}
+
 section{padding:88px 0;border-top:1px solid var(--border)}
 h2{font:800 clamp(30px,4vw,42px)/1.1 var(--font-display);margin-bottom:14px}
 .lead{color:var(--muted);max-width:56ch;margin-bottom:48px}
@@ -67,23 +64,27 @@ h2{font:800 clamp(30px,4vw,42px)/1.1 var(--font-display);margin-bottom:14px}
 .text ul{list-style:none;padding:0;display:grid;gap:10px}
 .text li{padding-left:22px;position:relative}
 .text li::before{content:"";position:absolute;left:0;top:.7em;width:10px;height:2px;background:var(--accent)}
-.panel{background:rgba(15,29,54,.78);border:1px solid var(--border);border-radius:14px;padding:24px;backdrop-filter:blur(10px)}
+.panel{background:rgba(8,18,45,.78);backdrop-filter:blur(10px);border:1px solid var(--border);border-radius:14px;padding:24px}
+
 .lp-big{font:800 56px var(--font-display);color:var(--win)}
 .lp-sub{color:var(--muted);margin-bottom:18px}
 .chart{width:100%;height:auto;display:block}
 .stats{display:flex;gap:28px;margin-top:16px;padding-top:16px;border-top:1px solid var(--border)}
 .stats div{font:700 22px var(--font-display)}
 .stats span{display:block;font:400 13px var(--font-body);color:var(--muted)}
+
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
 .grid .panel h3{font:700 20px var(--font-display);margin-bottom:8px}
 .grid .panel p{color:var(--muted);font-size:16px}
+
 .dl{text-align:center}
 .dl .lead{margin:0 auto 32px}
 .dl .cta{justify-content:center}
 footer{border-top:1px solid var(--border);padding:32px 0;color:var(--muted);font-size:14px}
+.footer-name{display:inline-block;color:var(--text);font-weight:700;letter-spacing:.04em;text-decoration:none;transition:transform .2s ease,color .2s ease,text-shadow .2s ease}
+.footer-name:hover{transform:translateY(-1px) scale(1.02);color:#6fa8ff;text-shadow:0 0 14px rgba(26,109,255,.6)}
 footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
-.footer-name{display:inline-block;color:var(--text);font-weight:700;letter-spacing:.04em;transition:transform .2s ease,color .2s ease,text-shadow .2s ease}
-.footer-name:hover{transform:translateY(-1px) scale(1.02);color:var(--accent);text-shadow:0 0 14px rgba(200,170,110,.5)}
+
 @media(max-width:860px){
   .hero,.split,.grid{grid-template-columns:1fr}
   .split.rev .text{order:0}
@@ -99,7 +100,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
 <div class="wrap">
   <nav>
     <a class="brand" href="#top">
-      <img src="logo.png" alt="" onerror="this.outerHTML='<svg viewBox=&quot;0 0 36 36&quot;><rect width=&quot;36&quot; height=&quot;36&quot; rx=&quot;8&quot; fill=&quot;#c8aa6e&quot;/><path d=&quot;M9 10h18v5h-6.5v12h-5V15H9z&quot; fill=&quot;#1a1405&quot;/></svg>'">
+      <img src="logo.png" alt="" onerror="this.outerHTML='<svg viewBox=&quot;0 0 36 36&quot;><rect width=&quot;36&quot; height=&quot;36&quot; rx=&quot;8&quot; fill=&quot;#1a6dff&quot;/><path d=&quot;M9 10h18v5h-6.5v12h-5V15H9z&quot; fill=&quot;#ffffff&quot;/></svg>'">
       Trackr
     </a>
     <ul>
@@ -192,8 +193,8 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
     <h2>Lance Trackr avant ta prochaine game.</h2>
     <p class="lead">Windows 10 et 11.</p>
     <div class="cta">
-      <a class="btn" href="https://github.com/KIZAFOX/trackr-release/releases/latest"  target="_blank">Télécharger la dernière version</a>
-      <a class="btn ghost" href="https://github.com/KIZAFOX/trackr-release/issues" target="_blank">Proposer une idée</a>
+      <a class="btn" href="https://github.com/KIZAFOX/trackr-release/releases/latest" target="_blank" rel="noreferrer">Télécharger la dernière version</a>
+      <a class="btn ghost" href="https://github.com/KIZAFOX/trackr-release/issues" target="_blank" rel="noreferrer">Proposer une idée</a>
     </div>
   </div>
 </section>
@@ -206,110 +207,46 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
 </footer>
 
 <script>
-const canvas = document.getElementById('cursor-network');
-const ctx = canvas.getContext('2d');
-const points = [];
-const pointer = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+const canvas=document.getElementById('cursor-network');
+const ctx=canvas.getContext('2d');
+const points=[];
+const pointer={x:innerWidth/2,y:innerHeight/2};
+const C='60,140,255';
 
-function setupCanvas() {
-  const ratio = window.devicePixelRatio || 1;
-  canvas.width = window.innerWidth * ratio;
-  canvas.height = window.innerHeight * ratio;
-  canvas.style.width = window.innerWidth + 'px';
-  canvas.style.height = window.innerHeight + 'px';
-  ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+function setup(){
+  const ratio=devicePixelRatio||1;
+  canvas.width=innerWidth*ratio;canvas.height=innerHeight*ratio;
+  canvas.style.width=innerWidth+'px';canvas.style.height=innerHeight+'px';
+  ctx.setTransform(ratio,0,0,ratio,0,0);
 }
-
-function createPoint() {
-  return {
-    x: Math.random() * window.innerWidth,
-    y: Math.random() * window.innerHeight,
-    vx: (Math.random() - 0.5) * 0.7,
-    vy: (Math.random() - 0.5) * 0.7,
-    size: Math.random() * 2 + 1.3
-  };
+function build(){
+  points.length=0;
+  const n=Math.min(42,Math.max(20,Math.floor(innerWidth*innerHeight/28000)));
+  for(let i=0;i<n;i++)points.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight,vx:(Math.random()-.5)*.7,vy:(Math.random()-.5)*.7,size:Math.random()*2+1.3});
 }
-
-function buildPoints() {
-  points.length = 0;
-  const count = Math.min(42, Math.max(20, Math.floor((window.innerWidth * window.innerHeight) / 28)));
-  for (let i = 0; i < count; i += 1) {
-    points.push(createPoint());
+function frame(){
+  ctx.clearRect(0,0,innerWidth,innerHeight);
+  for(const p of points){
+    p.x+=p.vx;p.y+=p.vy;
+    if(p.x<0||p.x>innerWidth)p.vx*=-1;
+    if(p.y<0||p.y>innerHeight)p.vy*=-1;
+    const dx=pointer.x-p.x,dy=pointer.y-p.y,d=Math.hypot(dx,dy);
+    if(d<180){const f=(180-d)/180;p.x-=dx*.025*f;p.y-=dy*.025*f}
+    ctx.beginPath();ctx.fillStyle=`rgba(${C},.7)`;ctx.arc(p.x,p.y,p.size,0,Math.PI*2);ctx.fill();
   }
-}
-
-function animate() {
-  ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
-
-  for (let i = 0; i < points.length; i += 1) {
-    const p = points[i];
-    p.x += p.vx;
-    p.y += p.vy;
-
-    if (p.x < 0 || p.x > window.innerWidth) p.vx *= -1;
-    if (p.y < 0 || p.y > window.innerHeight) p.vy *= -1;
-
-    const dx = pointer.x - p.x;
-    const dy = pointer.y - p.y;
-    const distance = Math.hypot(dx, dy);
-
-    if (distance < 180) {
-      const force = (180 - distance) / 180;
-      p.x -= dx * 0.025 * force;
-      p.y -= dy * 0.025 * force;
-    }
-
-    ctx.beginPath();
-    ctx.fillStyle = 'rgba(200, 170, 110, 0.7)';
-    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-    ctx.fill();
+  for(let i=0;i<points.length;i++)for(let j=i+1;j<points.length;j++){
+    const a=points[i],b=points[j],d=Math.hypot(a.x-b.x,a.y-b.y);
+    if(d<110){ctx.beginPath();ctx.strokeStyle=`rgba(${C},${(1-d/110)*.28})`;ctx.lineWidth=1;ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke()}
   }
-
-  for (let i = 0; i < points.length; i += 1) {
-    for (let j = i + 1; j < points.length; j += 1) {
-      const a = points[i];
-      const b = points[j];
-      const dx = a.x - b.x;
-      const dy = a.y - b.y;
-      const distance = Math.hypot(dx, dy);
-
-      if (distance < 110) {
-        const alpha = 1 - distance / 110;
-        ctx.beginPath();
-        ctx.strokeStyle = `rgba(200, 170, 110, ${alpha * 0.28})`;
-        ctx.lineWidth = 1;
-        ctx.moveTo(a.x, a.y);
-        ctx.lineTo(b.x, b.y);
-        ctx.stroke();
-      }
-    }
-  }
-
-  const glow = ctx.createRadialGradient(pointer.x, pointer.y, 0, pointer.x, pointer.y, 140);
-  glow.addColorStop(0, 'rgba(200, 170, 110, 0.28)');
-  glow.addColorStop(0.3, 'rgba(200, 170, 110, 0.14)');
-  glow.addColorStop(1, 'rgba(200, 170, 110, 0)');
-  ctx.beginPath();
-  ctx.fillStyle = glow;
-  ctx.arc(pointer.x, pointer.y, 140, 0, Math.PI * 2);
-  ctx.fill();
-
-  requestAnimationFrame(animate);
+  const g=ctx.createRadialGradient(pointer.x,pointer.y,0,pointer.x,pointer.y,140);
+  g.addColorStop(0,`rgba(${C},.28)`);g.addColorStop(.3,`rgba(${C},.14)`);g.addColorStop(1,`rgba(${C},0)`);
+  ctx.beginPath();ctx.fillStyle=g;ctx.arc(pointer.x,pointer.y,140,0,Math.PI*2);ctx.fill();
+  requestAnimationFrame(frame);
 }
-
-window.addEventListener('pointermove', (event) => {
-  pointer.x = event.clientX;
-  pointer.y = event.clientY;
-});
-
-window.addEventListener('resize', () => {
-  setupCanvas();
-  buildPoints();
-});
-
-setupCanvas();
-buildPoints();
-requestAnimationFrame(animate);
+addEventListener('pointermove',e=>{pointer.x=e.clientX;pointer.y=e.clientY});
+addEventListener('resize',()=>{setup();build()});
+setup();build();
+if(!matchMedia('(prefers-reduced-motion: reduce)').matches)requestAnimationFrame(frame);
 </script>
 
 </body>
