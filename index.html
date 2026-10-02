@@ -82,6 +82,8 @@ h2{font:800 clamp(30px,4vw,42px)/1.1 var(--font-display);margin-bottom:14px}
 .dl .cta{justify-content:center}
 footer{border-top:1px solid var(--border);padding:32px 0;color:var(--muted);font-size:14px}
 footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.footer-name{display:inline-block;color:var(--text);font-weight:700;letter-spacing:.04em;transition:transform .2s ease,color .2s ease,text-shadow .2s ease}
+.footer-name:hover{transform:translateY(-1px) scale(1.02);color:var(--accent);text-shadow:0 0 14px rgba(200,170,110,.5)}
 @media(max-width:860px){
   .hero,.split,.grid{grid-template-columns:1fr}
   .split.rev .text{order:0}
@@ -190,15 +192,15 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
     <h2>Lance Trackr avant ta prochaine game.</h2>
     <p class="lead">Windows 10 et 11.</p>
     <div class="cta">
-      <a class="btn" href="https://github.com/KIZAFOX/trackr-release/releases/latest">Télécharger la dernière version</a>
-      <a class="btn ghost" href="https://github.com/KIZAFOX/trackr-release/issues">Proposer une idée</a>
+      <a class="btn" href="https://github.com/KIZAFOX/trackr-release/releases/latest"  target="_blank">Télécharger la dernière version</a>
+      <a class="btn ghost" href="https://github.com/KIZAFOX/trackr-release/issues" target="_blank">Proposer une idée</a>
     </div>
   </div>
 </section>
 
 <footer>
   <div class="wrap">
-    <span>Trackr · par Victor</span>
+    <span>Trackr · par <a class="footer-name" href="https://twitter.com/KIZAFOX" target="_blank" rel="noreferrer">KIZAFOX</a></span>
     <span>Trackr n'est pas affilié à Riot Games. League of Legends est une marque de Riot Games, Inc.</span>
   </div>
 </footer>
